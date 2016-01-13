@@ -2,7 +2,8 @@
 . /opt/farm/scripts/functions.custom
 
 
-db="/etc/local/.config/backup.hosts"
+path="/etc/local/.config"
+files="$path/backup.hosts $path/mikrotik.hosts"
 
 base="`local_backup_directory`"
 remote="$base/remote"
@@ -11,12 +12,10 @@ sets="$base/sets"
 current="$base/sets/current"
 
 
-config="`dirname $db`"
-mkdir -p $config
-chmod 0700 $config
-
-touch $db
-chmod 0600 $db
+for db in $files; do
+	touch $db
+	chmod 0600 $db
+done
 
 mkdir -p $own
 mkdir -p $current
