@@ -9,29 +9,40 @@ path="$base/remote"
 
 
 if [ "$1" = "" ]; then
-	echo "usage: $0 <hostname>"
+	echo "usage: $0 <hostname[:port]>"
 	exit 1
-elif ! [[ $1 =~ ^[a-z0-9.-]+[.][a-z0-9]+$ ]]; then
+elif ! [[ $1 =~ ^[a-z0-9.-]+[.][a-z0-9]+([:][0-9]+)?$ ]]; then
 	echo "error: parameter $1 not conforming hostname format"
 	exit 1
-elif [ "`getent hosts $1`" = "" ]; then
-	echo "error: host $1 not found"
+fi
+
+server=$1
+if [ -z "${server##*:*}" ]; then
+	host="${server%:*}"
+	port="${server##*:}"
+else
+	host=$server
+	port=22
+fi
+
+if [ "`getent hosts $host`" = "" ]; then
+	echo "error: host $host not found"
 	exit 1
-elif [ -d $path/$1 ]; then
-	echo "error: host $1 already added"
+elif [ -d $path/$host ]; then
+	echo "error: host $host already added"
 	exit 1
 fi
 
-sshkey=`ssh_management_key_storage_filename $1`
-ssh -i $sshkey -o StrictHostKeyChecking=no -o PasswordAuthentication=no root@$1 uptime >/dev/null 2>/dev/null
+sshkey=`ssh_management_key_storage_filename $host`
+ssh -i $sshkey -p $port -o StrictHostKeyChecking=no -o PasswordAuthentication=no root@$host uptime >/dev/null 2>/dev/null
 
 if [[ $? != 0 ]]; then
-	echo "error: host $1 denied access"
+	echo "error: host $server denied access"
 	exit 1
 fi
 
-mkdir $path/$1
-chown backup:backup $path/$1
-chmod 0700 $path/$1
+mkdir $path/$host
+chown backup:backup $path/$host
+chmod 0700 $path/$host
 
-echo $1 >>$db
+echo $server >>$db
