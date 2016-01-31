@@ -33,8 +33,8 @@ elif [ -d $path/$host ]; then
 	exit 1
 fi
 
-sshkey=`ssh_management_key_storage_filename $host`
-ssh -i $sshkey -p $port -o StrictHostKeyChecking=no -o PasswordAuthentication=no root@$host uptime >/dev/null 2>/dev/null
+sshkey=`ssh_dedicated_key_storage_filename $host backup`
+ssh -i $sshkey -p $port -o StrictHostKeyChecking=no -o PasswordAuthentication=no backup@$host uptime >/dev/null 2>/dev/null
 
 if [[ $? != 0 ]]; then
 	echo "error: host $server denied access"

@@ -55,7 +55,7 @@ for server in `cat $db`; do
 		port=22
 	fi
 	for group in $groups; do
-		sshkey=`ssh_management_key_storage_filename $host`
+		sshkey=`ssh_dedicated_key_storage_filename $host backup`
 		target=`get_directory $path $host $date $group`
 		scp -B -p -i $sshkey -P $port backup@$host:$base/$group/* $target
 	done
