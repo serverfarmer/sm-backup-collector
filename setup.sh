@@ -24,4 +24,4 @@ chown backup:backup $remote $own $sets
 chmod 0700 $remote $own $sets
 chmod 0711 $current
 
-ln -sf /opt/sf-backup-collector/add-backup-host.sh /usr/local/bin/add-backup-host
+ln -sf /opt/farm/ext/backup-collector/add-backup-host.sh /usr/local/bin/add-backup-host
