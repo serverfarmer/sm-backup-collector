@@ -25,7 +25,7 @@ function get_directory() {
 db="/etc/local/.config/backup.hosts"
 
 base="`local_backup_directory`"
-path="$base/remote"
+path="/srv/mounts/backup/remote"
 
 if [ ! -d $path ] || [ ! -f $db ]; then
 	echo "error: backup is not configured yet"

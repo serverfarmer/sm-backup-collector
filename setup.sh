@@ -1,11 +1,9 @@
-#!/bin/bash
-. /opt/farm/scripts/functions.custom
-
+#!/bin/sh
 
 path="/etc/local/.config"
 files="$path/backup.hosts $path/mikrotik.hosts"
 
-base="`local_backup_directory`"
+base="/srv/mounts/backup"
 remote="$base/remote"
 own="$base/remote/`hostname`"
 sets="$base/sets"

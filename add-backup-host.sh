@@ -4,8 +4,7 @@
 
 db="/etc/local/.config/backup.hosts"
 
-base="`local_backup_directory`"
-path="$base/remote"
+path="/srv/mounts/backup/remote"
 
 
 if [ "$1" = "" ]; then
