@@ -2,8 +2,6 @@
 . /opt/farm/scripts/functions.custom
 
 
-db="/etc/local/.config/backup.hosts"
-
 path="/srv/mounts/backup/remote"
 
 
@@ -44,4 +42,4 @@ mkdir $path/$host
 chown backup:backup $path/$host
 chmod 0700 $path/$host
 
-echo $server >>$db
+echo $server >>/etc/local/.farm/backup.hosts

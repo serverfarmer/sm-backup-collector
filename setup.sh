@@ -1,8 +1,5 @@
 #!/bin/sh
 
-path="/etc/local/.config"
-files="$path/backup.hosts $path/mikrotik.hosts"
-
 base="/srv/mounts/backup"
 remote="$base/remote"
 own="$base/remote/`hostname`"
@@ -10,10 +7,8 @@ sets="$base/sets"
 current="$base/sets/current"
 
 
-for db in $files; do
-	touch $db
-	chmod 0600 $db
-done
+touch      /etc/local/.farm/backup.hosts
+chmod 0600 /etc/local/.farm/backup.hosts
 
 mkdir -p $own
 mkdir -p $current

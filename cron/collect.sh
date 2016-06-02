@@ -22,7 +22,7 @@ function get_directory() {
 }
 
 
-db="/etc/local/.config/backup.hosts"
+db="/etc/local/.farm/backup.hosts"
 
 base="`local_backup_directory`"
 path="/srv/mounts/backup/remote"
