@@ -38,7 +38,8 @@ else
 	groups="daily weekly custom"
 fi
 
-date=`date +%Y%m%d`
+index=`backup_history_index`
+date=`date +$index`
 host=`hostname`
 
 for group in $groups; do
