@@ -16,7 +16,7 @@ function get_directory() {
 	fi
 	out="$base/$date"
 	if [ -d $base ] && [ ! -d $out ]; then
-		mkdir -m 0700 $out
+		mkdir -p -m 0700 $out
 	fi
 	echo $out
 }
