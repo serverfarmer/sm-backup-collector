@@ -1,15 +1,14 @@
 #!/bin/bash
 . /opt/farm/scripts/functions.custom
 
-
 path="/srv/mounts/backup/remote"
-
+type=`/opt/farm/scripts/config/detect-hostname-type.sh $1`
 
 if [ "$1" = "" ]; then
 	echo "usage: $0 <hostname[:port]>"
 	exit 1
-elif ! [[ $1 =~ ^[a-z0-9.-]+[.][a-z0-9]+([:][0-9]+)?$ ]]; then
-	echo "error: parameter $1 not conforming hostname format"
+elif [ "$type" != "hostname" ] && [ "$type" != "ip" ]; then
+	echo "error: parameter $1 not conforming hostname format, or given hostname is invalid"
 	exit 1
 fi
 
@@ -22,10 +21,7 @@ else
 	port=22
 fi
 
-if [ "`getent hosts $host`" = "" ]; then
-	echo "error: host $host not found"
-	exit 1
-elif [ -d $path/$host ]; then
+if [ -d $path/$host ]; then
 	echo "error: host $host already added"
 	exit 1
 fi
