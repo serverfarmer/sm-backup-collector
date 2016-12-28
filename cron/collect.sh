@@ -47,7 +47,7 @@ for group in $groups; do
 	mv $base/$group/* $target
 done
 
-for server in `cat $db`; do
+for server in `cat $db |grep -v ^#`; do
 	if [ -z "${server##*:*}" ]; then
 		host="${server%:*}"
 		port="${server##*:}"
