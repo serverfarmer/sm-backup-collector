@@ -2,7 +2,7 @@
 . /opt/farm/scripts/functions.custom
 # this script collects encrypted backup files created
 # by Server Farmer cron scripts from remote machines
-# Tomasz Klim, 2013-2016
+# Tomasz Klim, 2013-2017
 
 
 function get_directory() {
@@ -15,8 +15,10 @@ function get_directory() {
 		base="$path/$host"
 	fi
 	out="$base/$date"
-	if [ -d $base ] && [ ! -d $out ]; then
-		mkdir -p -m 0700 $out
+	if [ -d $base ] || [ -h $base ]; then
+		if [ ! -d $out ]; then
+			mkdir -p -m 0700 $out
+		fi
 	fi
 	echo $out
 }
