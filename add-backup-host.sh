@@ -1,5 +1,6 @@
 #!/bin/bash
 . /opt/farm/scripts/functions.custom
+. /opt/farm/scripts/functions.keys
 
 path="/srv/mounts/backup/remote"
 type=`/opt/farm/scripts/config/detect-hostname-type.sh $1`
