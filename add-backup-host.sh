@@ -1,7 +1,6 @@
 #!/bin/bash
 . /opt/farm/scripts/functions.net
 . /opt/farm/scripts/functions.custom
-. /opt/farm/scripts/functions.keys
 
 path="/srv/mounts/backup/remote"
 

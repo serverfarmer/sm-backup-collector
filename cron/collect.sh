@@ -1,6 +1,5 @@
 #!/bin/bash
 . /opt/farm/scripts/functions.custom
-. /opt/farm/scripts/functions.keys
 # this script collects encrypted backup files created
 # by Server Farmer cron scripts from remote machines
 # Tomasz Klim, 2013-2017
