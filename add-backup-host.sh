@@ -2,8 +2,6 @@
 . /opt/farm/scripts/functions.net
 . /opt/farm/scripts/functions.custom
 
-path="/srv/mounts/backup/remote"
-
 if [ "$1" = "" ]; then
 	echo "usage: $0 <hostname[:port]>"
 	exit 1
@@ -21,21 +19,26 @@ else
 	port=22
 fi
 
-if [ -d $path/$host ]; then
-	echo "error: host $host already added"
+if grep -qxF $server /etc/local/.farm/backup.hosts; then
+	echo "error: server $server already added"
 	exit 1
 fi
 
-sshkey=`ssh_dedicated_key_storage_filename $host backup`
-ssh -i $sshkey -p $port -o StrictHostKeyChecking=no -o PasswordAuthentication=no backup@$host uptime >/dev/null 2>/dev/null
+newkey=`ssh_dedicated_key_storage_filename $host backup`
+keydir=`dirname $newkey`
 
-if [[ $? != 0 ]]; then
-	echo "error: host $server denied access"
+if [ ! -f $newkey ]; then
+	echo "error: ssh key for backup@$host not found"
 	exit 1
 fi
-
-mkdir $path/$host
-chown backup:backup $path/$host
-chmod 0700 $path/$host
 
 echo $server >>/etc/local/.farm/backup.hosts
+
+if [ -s /etc/local/.farm/collector.hosts ]; then
+	for collector in `cat /etc/local/.farm/collector.hosts`; do
+		echo "registering server $server on remote collector $collector"
+		colkey=`ssh_dedicated_key_storage_filename $collector root`
+		scp -B -p -i $colkey $newkey root@$collector:$keydir
+		scp -B -p -i $colkey /etc/local/.farm/backup.hosts root@$collector:/etc/local/.farm
+	done
+fi

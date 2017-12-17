@@ -14,13 +14,14 @@ function get_directory() {
 	else
 		base="$path/$host"
 	fi
-	out="$base/$date"
-	if [ -d $base ] || [ -h $base ]; then
-		if [ ! -d $out ]; then
-			mkdir -p -m 0700 $out
-		fi
+	if [ ! -d $base ] && [ ! -h $base ]; then
+		mkdir -m 0700 $base
+		chown backup:backup $base
 	fi
-	echo $out
+	if [ ! -d $base/$date ]; then
+		mkdir -m 0700 $base/$date
+	fi
+	echo $base/$date
 }
 
 
@@ -42,14 +43,14 @@ fi
 
 index=`backup_history_index`
 date=`date +$index`
-host=`hostname`
+ownhost=`hostname`
 
 for group in $groups; do
-	target=`get_directory $path $host $date $group`
+	target=`get_directory $path $ownhost $date $group`
 	mv $base/$group/* $target
 done
 
-for server in `cat $db |grep -v ^#`; do
+for server in `cat $db |grep -v ^# |grep -vxF $ownhost`; do
 	if [ -z "${server##*:*}" ]; then
 		host="${server%:*}"
 		port="${server##*:}"
@@ -60,6 +61,6 @@ for server in `cat $db |grep -v ^#`; do
 	for group in $groups; do
 		sshkey=`ssh_dedicated_key_storage_filename $host backup`
 		target=`get_directory $path $host $date $group`
-		scp -B -p -i $sshkey -P $port backup@$host:$base/$group/* $target
+		scp -B -p -i $sshkey -P $port -o StrictHostKeyChecking=no -o PasswordAuthentication=no backup@$host:$base/$group/* $target
 	done
 done
