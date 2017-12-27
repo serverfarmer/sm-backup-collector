@@ -19,7 +19,7 @@ function get_directory() {
 		chown backup:backup $base
 	fi
 	if [ ! -d $base/$date ]; then
-		mkdir -m 0700 $base/$date
+		mkdir -p -m 0700 $base/$date
 	fi
 	echo $base/$date
 }
