@@ -25,7 +25,6 @@ if grep -qxF $server /etc/local/.farm/backup.hosts; then
 fi
 
 newkey=`ssh_dedicated_key_storage_filename $host backup`
-keydir=`dirname $newkey`
 
 if [ ! -f $newkey ]; then
 	echo "error: ssh key for backup@$host not found"
@@ -35,10 +34,5 @@ fi
 echo $server >>/etc/local/.farm/backup.hosts
 
 if [ -s /etc/local/.farm/collector.hosts ]; then
-	for collector in `cat /etc/local/.farm/collector.hosts`; do
-		echo "registering server $server on remote collector $collector"
-		colkey=`ssh_dedicated_key_storage_filename $collector root`
-		scp -B -p -i $colkey $newkey root@$collector:$keydir
-		scp -B -p -i $colkey /etc/local/.farm/backup.hosts root@$collector:/etc/local/.farm
-	done
+	/opt/farm/ext/backup-collector/sync-remote-collectors.sh $host
 fi

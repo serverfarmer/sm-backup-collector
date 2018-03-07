@@ -6,7 +6,8 @@ small and medium server farms.
 1. Each server is responsible for generating its own backup files on daily basis.
 
 2. There is one central backup server, that holds ssh keys for "backup" account
-   on all servers.
+   on all servers (this role can be split between farm-manager, responsible for
+   key management, and "slave" backup collectors, responsible for backups).
 
 3. Backup collector runs on the mentioned central backup server, and fetches
    backup files from all remote servers to local storage using scp.
