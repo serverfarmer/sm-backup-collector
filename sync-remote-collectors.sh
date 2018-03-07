@@ -1,5 +1,4 @@
-#!/bin/bash
-. /opt/farm/scripts/functions.net
+#!/bin/sh
 . /opt/farm/scripts/functions.custom
 
 if [ -s /etc/local/.farm/collector.hosts ]; then
