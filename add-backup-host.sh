@@ -1,5 +1,5 @@
 #!/bin/bash
-. /opt/farm/scripts/functions.net
+. /opt/farm/ext/net-utils/functions
 . /opt/farm/scripts/functions.custom
 
 if [ "$1" = "" ]; then

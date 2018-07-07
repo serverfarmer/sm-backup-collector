@@ -1,10 +1,11 @@
 #!/bin/sh
 
+/opt/farm/scripts/setup/extension.sh sf-net-utils
+
 base="/srv/mounts/backup"
 remote="$base/remote"
 sets="$base/sets"
 current="$base/sets/current"
-
 
 touch      /etc/local/.farm/backup.hosts /etc/local/.farm/collector.hosts
 chmod 0600 /etc/local/.farm/backup.hosts /etc/local/.farm/collector.hosts
