@@ -45,10 +45,12 @@ index=`backup_history_index`
 date=`date +$index`
 ownhost=`hostname`
 
-for group in $groups; do
-	target=`get_directory $path $ownhost $date $group`
-	mv $base/$group/* $target
-done
+if grep -qxF $ownhost $db; then
+	for group in $groups; do
+		target=`get_directory $path $ownhost $date $group`
+		mv $base/$group/* $target
+	done
+fi
 
 for server in `cat $db |grep -v ^# |grep -vxF $ownhost`; do
 	if [ -z "${server##*:*}" ]; then
