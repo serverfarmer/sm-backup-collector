@@ -41,7 +41,12 @@ else
 	groups="daily weekly custom"
 fi
 
-index=`backup_history_index`
+if [ -s /etc/local/.config/backup.index ]; then
+	index="`cat /etc/local/.config/backup.index`"
+else
+	index="%Y%m%d"
+fi
+
 date=`date +$index`
 ownhost=`hostname`
 
