@@ -1,5 +1,4 @@
-#!/bin/sh
-. /opt/farm/scripts/functions.custom
+#!/bin/bash
 
 if [ -s /etc/local/.farm/collector.hosts ]; then
 	for collector in `cat /etc/local/.farm/collector.hosts |grep -v ^#`; do
@@ -12,12 +11,12 @@ if [ -s /etc/local/.farm/collector.hosts ]; then
 			port=22
 		fi
 
-		colkey=`ssh_dedicated_key_storage_filename $host root`
+		colkey=`/opt/farm/ext/keys/get-ssh-dedicated-key.sh $host root`
 
 		if [ "$1" = "" ]; then
 			echo "synchronizing backup list with remote collector $collector"
 		else
-			newkey=`ssh_dedicated_key_storage_filename $1 backup`
+			newkey=`/opt/farm/ext/keys/get-ssh-dedicated-key.sh $1 backup`
 			keydir=`dirname $newkey`
 
 			if [ -f $newkey ]; then

@@ -1,8 +1,5 @@
 #!/bin/bash
 . /opt/farm/scripts/functions.custom
-# this script collects encrypted backup files created
-# by Server Farmer cron scripts from remote machines
-# Tomasz Klim, 2013-2017
 
 
 function get_directory() {
@@ -66,7 +63,7 @@ for server in `cat $db |grep -v ^# |grep -vxF $ownhost`; do
 		port=22
 	fi
 	for group in $groups; do
-		sshkey=`ssh_dedicated_key_storage_filename $host backup`
+		sshkey=`/opt/farm/ext/keys/get-ssh-dedicated-key.sh $host backup`
 		target=`get_directory $path $host $date $group`
 		scp -B -p -i $sshkey -P $port -o StrictHostKeyChecking=no -o PasswordAuthentication=no backup@$host:$base/$group/* $target
 	done

@@ -1,6 +1,5 @@
 #!/bin/bash
 . /opt/farm/ext/net-utils/functions
-. /opt/farm/scripts/functions.custom
 
 if [ "$1" = "" ]; then
 	echo "usage: $0 <hostname[:port]>"
@@ -24,7 +23,7 @@ if grep -qxF $server /etc/local/.farm/backup.hosts; then
 	exit 1
 fi
 
-newkey=`ssh_dedicated_key_storage_filename $host backup`
+newkey=`/opt/farm/ext/keys/get-ssh-dedicated-key.sh $host backup`
 
 if [ ! -f $newkey ]; then
 	echo "error: ssh key for backup@$host not found"
