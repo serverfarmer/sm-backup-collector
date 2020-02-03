@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -s /etc/local/.farm/collector.hosts ]; then
-	for collector in `cat /etc/local/.farm/collector.hosts |grep -v ^#`; do
+	for collector in `grep -v ^# /etc/local/.farm/collector.hosts`; do
 
 		if [ -z "${collector##*:*}" ]; then
 			host="${collector%:*}"

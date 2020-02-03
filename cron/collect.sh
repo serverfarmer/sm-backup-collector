@@ -1,5 +1,4 @@
 #!/bin/bash
-. /opt/farm/scripts/functions.custom
 
 
 function get_directory() {
@@ -24,7 +23,7 @@ function get_directory() {
 
 db="/etc/local/.farm/backup.hosts"
 
-base="`local_backup_directory`"
+base="`/opt/farm/config/get-local-backup-directory.sh`"
 path="/srv/mounts/backup/remote"
 
 if [ ! -d $path ] || [ ! -f $db ]; then
@@ -54,7 +53,7 @@ if grep -qxF $ownhost $db; then
 	done
 fi
 
-for server in `cat $db |grep -v ^# |grep -vxF $ownhost`; do
+for server in `grep -v ^# $db |grep -vxF $ownhost`; do
 	if [ -z "${server##*:*}" ]; then
 		host="${server%:*}"
 		port="${server##*:}"
