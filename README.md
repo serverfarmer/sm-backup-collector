@@ -13,7 +13,7 @@ All hosts with installed Server Farmer, unless explicitly disabled, are doing th
 
 New servers are added using `add-backup-host.sh` script, which requires that added server has already installed dedicated ssh key for `backup` system user.
 
-Usually all this process is wrapped by `add-managed-host.sh` script from `sf-farm-manager` extension, which is the primary script for adding new servers to the farm.
+Usually all this process is wrapped by `add-managed-host.sh` script from `sm-farm-manager` extension, which is the primary script for adding new servers to the farm.
 
 
 ### Types of backup collectors

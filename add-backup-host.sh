@@ -33,5 +33,5 @@ fi
 echo $server >>/etc/local/.farm/backup.hosts
 
 if [ -s /etc/local/.farm/collector.hosts ]; then
-	/opt/farm/ext/backup-collector/sync-remote-collectors.sh $host
+	/opt/farm/mgr/backup-collector/sync-remote-collectors.sh $host
 fi
