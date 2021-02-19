@@ -21,12 +21,10 @@ function get_directory() {
 }
 
 
-db="/etc/local/.farm/backup.hosts"
-
 base="`/opt/farm/config/get-local-backup-directory.sh`"
 path="/srv/mounts/backup/remote"
 
-if [ ! -d $path ] || [ ! -f $db ]; then
+if [ ! -d $path ] || [ ! -f ~/.farm/backup.hosts ]; then
 	echo "error: backup is not configured yet"
 	exit 1
 fi
@@ -46,14 +44,14 @@ fi
 date=`date +$index`
 ownhost=`hostname`
 
-if grep -qxF $ownhost $db; then
+if grep -qxF $ownhost ~/.farm/backup.hosts; then
 	for group in $groups; do
 		target=`get_directory $path $ownhost $date $group`
 		mv $base/$group/* $target
 	done
 fi
 
-for server in `grep -v ^# $db |grep -vxF $ownhost`; do
+for server in `grep -v ^# ~/.farm/backup.hosts |grep -vxF $ownhost`; do
 	if [ -z "${server##*:*}" ]; then
 		host="${server%:*}"
 		port="${server##*:}"

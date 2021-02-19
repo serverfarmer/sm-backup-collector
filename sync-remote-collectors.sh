@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ -s /etc/local/.farm/collector.hosts ]; then
-	for collector in `grep -v ^# /etc/local/.farm/collector.hosts`; do
+if [ -s ~/.farm/collector.hosts ]; then
+	for collector in `grep -v ^# ~/.farm/collector.hosts`; do
 
 		if [ -z "${collector##*:*}" ]; then
 			host="${collector%:*}"
@@ -25,6 +25,6 @@ if [ -s /etc/local/.farm/collector.hosts ]; then
 			fi
 		fi
 
-		scp -B -p -i $colkey -P $port /etc/local/.farm/backup.hosts root@$host:/etc/local/.farm
+		scp -B -p -i $colkey -P $port ~/.farm/backup.hosts root@$host:/root/.farm
 	done
 fi

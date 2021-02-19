@@ -2,13 +2,10 @@
 
 /opt/farm/scripts/setup/extension.sh sf-net-utils
 
-path="/etc/local/.farm"
-
-mkdir -p $path
-chmod 0700 $path
-
-touch      $path/backup.hosts $path/collector.hosts
-chmod 0600 $path/backup.hosts $path/collector.hosts
+mkdir -p   ~/.farm
+chmod 0700 ~/.farm
+touch      ~/.farm/backup.hosts ~/.farm/collector.hosts
+chmod 0600 ~/.farm/backup.hosts ~/.farm/collector.hosts
 
 base="/srv/mounts/backup"
 remote="$base/remote"
