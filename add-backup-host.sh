@@ -18,7 +18,7 @@ else
 	port=22
 fi
 
-if grep -qxF $server ~/.farm/backup.hosts; then
+if grep -qxF $server ~/.serverfarmer/inventory/backup.hosts; then
 	echo "error: server $server already added"
 	exit 1
 fi
@@ -30,8 +30,8 @@ if [ ! -f $newkey ]; then
 	exit 1
 fi
 
-echo $server >>~/.farm/backup.hosts
+echo $server >>~/.serverfarmer/inventory/backup.hosts
 
-if [ -s ~/.farm/collector.hosts ]; then
+if [ -s ~/.serverfarmer/inventory/collector.hosts ]; then
 	/opt/farm/mgr/backup-collector/sync-remote-collectors.sh $host
 fi
